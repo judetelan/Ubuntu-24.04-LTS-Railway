@@ -1,68 +1,151 @@
-![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04-E95420?logo=ubuntu)
-![Docker](https://img.shields.io/badge/Docker-Supported-blue?logo=docker)
+![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04_LTS-E95420?logo=ubuntu&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)
+![Railway](https://img.shields.io/badge/Railway-Deploy-0B0D0E?logo=railway&logoColor=white)
+![ttyd](https://img.shields.io/badge/ttyd-1.7.7-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-# Ubuntu-Railway
+<div align="center">
+  <img src="assets/ubuntu.svg" alt="Ubuntu Logo" width="120"/>
+  <h1>Ubuntu 24.04 LTS Web Terminal</h1>
+  <p><strong>Access a full Ubuntu terminal from your browser, anywhere.</strong></p>
 
-Want to try out Ubuntu or want to have a mini version of Ubuntu available at all times? Then feel free to give this project a try:
+  [![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/template/4lvigd?referralCode=zkQBwB)
+</div>
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/template/4lvigd?referralCode=zkQBwB)
+---
 
-## Description
+## Overview
 
-This project uses the official [Ubuntu 22.04](https://hub.docker.com/_/ubuntu) image to deploy a container which can then be used to install most of the CLI tools. Behind the scenes, it uses [ttyd](https://github.com/tsl0922/ttyd) to provide a hassle-free and a very accessible way to access the command line.
+Deploy a fully-functional **Ubuntu 24.04 LTS (Noble Numbat)** terminal accessible via web browser. Powered by [ttyd](https://github.com/tsl0922/ttyd), this template provides secure, password-protected shell access from anywhere in the world.
 
-### Features
+**LTS Support**: Ubuntu 24.04 is supported until **April 2029** (standard) and **April 2034** (extended).
 
-- 🐧 Official Ubuntu 22.04 LTS base
-- 🔒 Password-protected web terminal
-- 💻 Neofetch display on login
+## Features
+
+| Feature | Description |
+|---------|-------------|
+| **Ubuntu 24.04 LTS** | Latest Long Term Support release |
+| **Web Terminal** | Access via browser using ttyd 1.7.7 |
+| **Password Protected** | Secure authentication required |
+| **Dev Tools Included** | Node.js, npm, Python3, Git, and more |
+| **Persistent Storage** | Optional Railway volume support |
+| **Instant Deploy** | One-click Railway deployment |
+
+## Pre-installed Packages
+
+```
+wget curl git python3 python3-pip nodejs npm neofetch vim nano htop build-essential
+```
 
 ## Environment Variables
 
-- **PORT:** The port on which the ttyd program will listen on.
-- **USERNAME:** The username which will be used to login to the web shell.
-- **PASSWORD:** The password which will be used to login to the web shell.
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PORT` | Yes | Port for ttyd (Railway sets automatically) |
+| `USERNAME` | Yes | Login username for web terminal |
+| `PASSWORD` | Yes | Login password for web terminal |
 
-**NOTE:** It is strongly advised to provide the USERNAME and PASSWORD environment variables before deploying the project.
+> **Security**: Always set `USERNAME` and `PASSWORD` before deploying to production.
 
-## Deploy and Host
+## Quick Start
 
-Click the deploy button above to deploy this template to Railway. The deployment process is automatic and takes just a few minutes. This service will be accessible via the Railway-provided domain after deployment.
+### Deploy to Railway
 
-## Why Deploy
+1. Click the **Deploy on Railway** button above
+2. Set environment variables:
+   - `USERNAME`: Your preferred username
+   - `PASSWORD`: A strong password
+3. Deploy and access via the generated Railway URL
 
-- Quick access to an Ubuntu terminal from anywhere
-- No local installation required
-- Perfect for testing and learning
-- Lightweight and fast
+### Run Locally
 
-## Common Use Cases
+```bash
+docker build -t ubuntu-webterminal .
+docker run -p 8080:8080 -e PORT=8080 -e USERNAME=admin -e PASSWORD=secret ubuntu-webterminal
+```
 
-- Testing shell scripts
-- Learning Linux commands
-- Remote development environment
-- Package testing
+Access at `http://localhost:8080`
 
-## Dependencies for Deployment
+## Use Cases
 
-- Docker (handled by Railway)
-- Railway account
+- **Remote Development** - Access a Linux environment from any device
+- **Learning Linux** - Practice commands in a safe environment
+- **Script Testing** - Test bash scripts without local setup
+- **CI/CD Staging** - Quick environment for testing deployments
+- **Cloud Shell** - Personal cloud terminal accessible anywhere
 
-### Deployment Dependencies
+## Architecture
 
-This template automatically installs:
-- wget
-- curl
-- git
-- python3
-- python3-pip
-- neofetch
-- ttyd
+```
+┌─────────────────────────────────────────────┐
+│                  Browser                     │
+└─────────────────┬───────────────────────────┘
+                  │ HTTPS
+┌─────────────────▼───────────────────────────┐
+│              Railway                         │
+│  ┌────────────────────────────────────────┐ │
+│  │         ttyd (Port 8080)               │ │
+│  │  ┌──────────────────────────────────┐  │ │
+│  │  │     Ubuntu 24.04 LTS Shell       │  │ │
+│  │  │  • bash • python3 • node • git   │  │ │
+│  │  └──────────────────────────────────┘  │ │
+│  └────────────────────────────────────────┘ │
+│                    │                         │
+│  ┌─────────────────▼──────────────────────┐ │
+│  │        Volume (Optional /root)         │ │
+│  └────────────────────────────────────────┘ │
+└─────────────────────────────────────────────┘
+```
 
-## About Hosting
+## Adding Persistent Storage
 
-Railway provides free tier hosting with:
-- $1 free credit monthly
-- Automatic HTTPS
-- Custom domains support
-- Easy environment variable management
+In Railway dashboard:
+1. Go to your service → **Settings** → **Volumes**
+2. Add volume with mount path: `/root`
+3. Redeploy
+
+Your home directory will now persist across restarts.
+
+## Extending the Image
+
+Fork this repo and modify the Dockerfile:
+
+```dockerfile
+# Add more packages
+RUN apt-get update && apt-get install -y \
+    your-package-here \
+    another-package
+
+# Or install from npm
+RUN npm install -g your-global-package
+```
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| "Application failed to respond" | Check PORT env var is set |
+| Can't login | Verify USERNAME and PASSWORD are set |
+| Packages not found | Run `apt-get update` first |
+| Permission denied | Use `sudo` or run as root |
+
+## Resources
+
+- [Ubuntu 24.04 Release Notes](https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890)
+- [ttyd Documentation](https://github.com/tsl0922/ttyd)
+- [Railway Documentation](https://docs.railway.app/)
+
+## License
+
+MIT License - Feel free to use, modify, and distribute.
+
+---
+
+<div align="center">
+  <p>Made with Ubuntu + ttyd + Railway</p>
+  <p>
+    <a href="https://github.com/judetelan/Ubuntu-24.04-LTS-Railway/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/judetelan/Ubuntu-24.04-LTS-Railway/issues">Request Feature</a>
+  </p>
+</div>
