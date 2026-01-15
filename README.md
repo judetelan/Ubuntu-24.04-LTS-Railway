@@ -1,64 +1,44 @@
-# Ubuntu 24.04 LTS Web Terminal
+# Deploy and Host Ubuntu 24.04 LTS Web Terminal on Railway
 
-Access a full Ubuntu terminal from your browser. Anywhere. Anytime.
+Ubuntu 24.04 LTS Web Terminal is a browser-accessible Linux shell powered by ttyd. It provides instant access to a full Ubuntu environment without SSH configuration. Perfect for remote development, cloud administration, or learning Linux - all through your web browser with password-protected authentication.
 
-## What You Get
+## About Hosting Ubuntu 24.04 LTS Web Terminal
 
-- **Ubuntu 24.04 LTS** - Latest Long Term Support (supported until 2029)
-- **Web-based Terminal** - No SSH needed, just open in browser
-- **Password Protected** - Secure login required
-- **Dev Tools Pre-installed** - Node.js, npm, Python3, Git, and more
-- **Persistent Storage** - Your files survive restarts
+Hosting a web terminal requires a containerized Ubuntu environment with ttyd serving the shell over HTTP. This template packages Ubuntu 24.04 LTS (Noble Numbat) with ttyd 1.7.7, pre-installs common development tools, and configures authentication via environment variables. Railway handles the container orchestration, SSL termination, and public URL generation. The included volume mount at `/root` ensures your files, configurations, and installed packages persist across restarts and redeployments.
 
-## Pre-installed
+## Common Use Cases
+
+- **Remote Development** - Access a consistent Linux development environment from any device with a browser
+- **Cloud Shell** - Personal cloud-based terminal for system administration and DevOps tasks
+- **Learning & Education** - Safe sandbox environment to practice Linux commands and scripting
+- **CI/CD Testing** - Quick disposable environment for testing deployment scripts and automation
+
+## Dependencies for Ubuntu 24.04 LTS Web Terminal Hosting
+
+- **ttyd 1.7.7** - Web-based terminal emulator that shares your terminal over HTTP
+- **Ubuntu 24.04 LTS** - Base operating system with Long Term Support until April 2029
+
+### Deployment Dependencies
+
+- [ttyd - Share your terminal over the web](https://github.com/tsl0922/ttyd)
+- [Ubuntu 24.04 LTS Release Notes](https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890)
+
+### Implementation Details
+
+Pre-installed packages available immediately after deployment:
 
 ```
-nodejs npm python3 git curl wget vim nano htop build-essential neofetch
+wget curl git python3 python3-pip nodejs npm neofetch vim nano htop build-essential
 ```
 
-## Quick Setup
-
-1. Set `USERNAME` - your login name
-2. Set `PASSWORD` - your login password
-3. Deploy and access via the generated URL
-
-## Use Cases
-
-**Remote Development** - Code from any device with a browser
-
-**Cloud Shell** - Personal Linux environment in the cloud
-
-**Learning** - Safe sandbox to practice Linux commands
-
-**CI/CD** - Quick environment for testing scripts
-
-## Technical Details
-
-| Component | Version |
-|-----------|---------|
-| Ubuntu | 24.04 LTS (Noble Numbat) |
-| ttyd | 1.7.7 |
-| Node.js | Latest LTS |
-| Python | 3.x |
-
-## Adding More Tools
-
-Once deployed, install anything via apt:
+Authentication is configured via environment variables:
 
 ```bash
-sudo apt update && sudo apt install <package>
+ttyd -p $PORT -c $USERNAME:$PASSWORD /bin/bash
 ```
 
-Or npm:
+## Why Deploy Ubuntu 24.04 LTS Web Terminal on Railway?
 
-```bash
-npm install -g <package>
-```
+Railway is a singular platform to deploy your infrastructure stack. Railway will host your infrastructure so you don't have to deal with configuration, while allowing you to vertically and horizontally scale it.
 
-## Persistent Storage
-
-Volume mounted at `/root` - your home directory persists across restarts and redeploys.
-
----
-
-**Support**: [GitHub Issues](https://github.com/judetelan/Ubuntu-24.04-LTS-Railway/issues)
+By deploying Ubuntu 24.04 LTS Web Terminal on Railway, you are one step closer to supporting a complete full-stack application with minimal burden. Host your servers, databases, AI agents, and more on Railway.
