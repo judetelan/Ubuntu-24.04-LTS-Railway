@@ -1,5 +1,7 @@
 # Deploy and Host Ubuntu 24.04 LTS Web Terminal on Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/ubuntu-2404-lts-web-terminal?referralCode=oCtTyG&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
 Ubuntu 24.04 LTS Web Terminal is a browser-accessible Linux shell powered by ttyd. It provides instant access to a full Ubuntu environment without SSH configuration. Perfect for remote development, cloud administration, or learning Linux - all through your web browser with password-protected authentication.
 
 ## About Hosting Ubuntu 24.04 LTS Web Terminal
