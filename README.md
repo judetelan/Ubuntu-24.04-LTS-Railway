@@ -9,7 +9,7 @@
   <h1>Ubuntu 24.04 LTS Web Terminal</h1>
   <p><strong>Access a full Ubuntu terminal from your browser, anywhere.</strong></p>
 
-  [![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/template/4lvigd?referralCode=zkQBwB)
+  [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/Rb4lm9?referralCode=oCtTyG&utm_medium=integration&utm_source=template&utm_campaign=generic)
 </div>
 
 ---
