@@ -2,15 +2,7 @@
 builder = "dockerfile"
 
 [deploy]
-startCommand = "/bin/bash -c \"echo \\\"export PS1='\\\\[\\\\033[01;32m\\\\]$USERNAME@\\\\h\\\\[\\\\033[00m\\\\]:\\\\[\\\\033[01;34m\\\\]\\\\w\\\\[\\\\033[00m\\\\]\\\\$ '\\\" >> /root/.bashrc && /bin/ttyd -p $PORT -c $USERNAME:$PASSWORD /bin/bash\""
 healthcheckPath = "/"
 healthcheckTimeout = 300
-
-[[services]]
-name = "Ubuntu Terminal"
-internalPort = 8080
-
-[variables]
-PORT = { default = "8080", description = "Port for ttyd (auto-set by Railway)" }
-USERNAME = { required = true, description = "Login username" }
-PASSWORD = { required = true, description = "Login password" }
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
