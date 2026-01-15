@@ -1,5 +1,8 @@
 FROM ubuntu:24.04
 
+# Build-time only - prevents interactive prompts
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y wget curl git python3 python3-pip nodejs npm neofetch vim nano htop build-essential && \
@@ -11,8 +14,9 @@ RUN wget -qO /bin/ttyd https://github.com/tsl0922/ttyd/releases/download/1.7.7/t
 RUN echo "neofetch" >> /root/.bashrc && \
     echo "cd /root" >> /root/.bashrc
 
-EXPOSE $PORT
+# Only expose PORT - Railway sets this automatically
+EXPOSE 8080
 
 CMD ["/bin/bash", "-c", "\
     echo \"export PS1='\\[\\033[01;32m\\]$USERNAME@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$ '\" >> /root/.bashrc && \
-    /bin/ttyd -p $PORT -c $USERNAME:$PASSWORD /bin/bash"]
+    /bin/ttyd -p ${PORT:-8080} -c $USERNAME:$PASSWORD /bin/bash"]
